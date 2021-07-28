@@ -1,6 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import *
 import random
+import os
 
 import config
 
@@ -44,7 +45,7 @@ def generate(update: Update, context: CallbackContext) -> None:
 
 def main() -> None:
 
-    updater = Updater(config.TOKEN, arbitrary_callback_data=True)
+    updater = Updater(os.environ['TOKEN'], arbitrary_callback_data=True)
 
     updater.dispatcher.add_handler(
         ConversationHandler(
