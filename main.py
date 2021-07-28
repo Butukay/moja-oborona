@@ -3,8 +3,6 @@ from telegram.ext import *
 import random
 import os
 
-import config
-
 def start(update: Update, context: CallbackContext) -> None:
 
     update.message.reply_text("Для взаимодействия напишите \"ooo\"")
