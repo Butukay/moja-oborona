@@ -1,12 +1,13 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import Updater,CommandHandler, CallbackQueryHandler, CallbackContext, InvalidCallbackData
-
+from telegram.ext import *
 import random
 
 import config
 
 def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("Для взаимодействия напишите /ooo")
+    update.message.reply_text("Для взаимодействия напишите \"ooo\"")
+
+    return 1
 
 
 def help(update: Update, context: CallbackContext) -> None:
@@ -14,6 +15,8 @@ def help(update: Update, context: CallbackContext) -> None:
         "абоба абоба абоба \n"
         "абоба"
     )
+
+    return 1
 
 
 def generate(update: Update, context: CallbackContext) -> None:
@@ -32,13 +35,19 @@ def generate(update: Update, context: CallbackContext) -> None:
 
     update.message.reply_text(text.upper())
 
+    return 1
+
 
 def main() -> None:
     updater = Updater(config.TOKEN, arbitrary_callback_data=True)
 
-    updater.dispatcher.add_handler(CommandHandler('start', start))
-    updater.dispatcher.add_handler(CommandHandler('help', help))
-    updater.dispatcher.add_handler(CommandHandler('ooo', generate))
+    updater.dispatcher.add_handler(
+        ConversationHandler(
+            entry_points = [CommandHandler('start', start)],
+            states = {1 : [MessageHandler((Filters.regex('ooo') ^ Filters.regex('ооо')), generate)]},
+            fallbacks = [CommandHandler('help', help)]
+        )
+    )
 
     updater.start_polling()
 
