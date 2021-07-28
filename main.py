@@ -48,7 +48,7 @@ def main() -> None:
     updater.dispatcher.add_handler(
         ConversationHandler(
             entry_points = [CommandHandler('start', start)],
-            states = {1 : [MessageHandler((Filters.regex('ooo') ^ Filters.regex('ооо')), generate)]},
+            states = {1 : [MessageHandler((Filters.regex(re.compile(r'ооо', re.IGNORECASE)) ^ Filters.regex(re.compile(r'ooo', re.IGNORECASE))), generate)]},
             fallbacks = [CommandHandler('info', info)]
         )
     )
