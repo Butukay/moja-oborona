@@ -5,15 +5,19 @@ import random
 import config
 
 def start(update: Update, context: CallbackContext) -> None:
+
     update.message.reply_text("Для взаимодействия напишите \"ooo\"")
 
     return 1
 
 
-def help(update: Update, context: CallbackContext) -> None:
+def info(update: Update, context: CallbackContext) -> None:
+
     update.message.reply_text(
+        "Бот, который изменит мир \n\n"
         "абоба абоба абоба \n"
-        "абоба"
+        "абоба \n\n"
+        "Made with ❤️ by Butukay, Stre1f"
     )
 
     return 1
@@ -39,13 +43,14 @@ def generate(update: Update, context: CallbackContext) -> None:
 
 
 def main() -> None:
+
     updater = Updater(config.TOKEN, arbitrary_callback_data=True)
 
     updater.dispatcher.add_handler(
         ConversationHandler(
             entry_points = [CommandHandler('start', start)],
             states = {1 : [MessageHandler((Filters.regex('ooo') ^ Filters.regex('ооо')), generate)]},
-            fallbacks = [CommandHandler('help', help)]
+            fallbacks = [CommandHandler('info', info)]
         )
     )
 
