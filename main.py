@@ -48,7 +48,7 @@ def main() -> None:
     APPNAME = os.environ['APPNAME']
     PORT = int(os.environ.get('PORT', '8443'))
 
-    updater = Updater(, arbitrary_callback_data=True)
+    updater = Updater(TOKEN, arbitrary_callback_data=True)
 
     updater.dispatcher.add_handler (
         ConversationHandler (
