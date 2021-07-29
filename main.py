@@ -45,7 +45,7 @@ def generate(update: Update, context: CallbackContext) -> None:
 def main() -> None:
 
     TOKEN = os.environ['TOKEN']
-    APPNAME = = os.environ['APPNAME']
+    APPNAME = os.environ['APPNAME']
     PORT = int(os.environ.get('PORT', '8443'))
 
     updater = Updater(, arbitrary_callback_data=True)
