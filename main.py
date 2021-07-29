@@ -44,17 +44,26 @@ def generate(update: Update, context: CallbackContext) -> None:
 
 def main() -> None:
 
-    updater = Updater(os.environ['TOKEN'], arbitrary_callback_data=True)
+    TOKEN = os.environ['TOKEN']
+    APPNAME = = os.environ['APPNAME']
+    PORT = int(os.environ.get('PORT', '8443'))
 
-    updater.dispatcher.add_handler(
-        ConversationHandler(
+    updater = Updater(, arbitrary_callback_data=True)
+
+    updater.dispatcher.add_handler (
+        ConversationHandler (
             entry_points = [CommandHandler('start', start)],
             states = {1 : [MessageHandler((Filters.regex(re.compile(r'ооо', re.IGNORECASE)) ^ Filters.regex(re.compile(r'ooo', re.IGNORECASE))), generate)]},
             fallbacks = [CommandHandler('info', info)]
         )
     )
 
-    updater.start_polling()
+    updater.start_webhook (
+        listen="0.0.0.0",
+        port=PORT,
+        url_path=TOKEN,
+        webhook_url="https://{appname}.herokuapp.com/{token}".format(appname=APPNAME, token=TOKEN)
+    )
 
 
 if __name__ == '__main__':
